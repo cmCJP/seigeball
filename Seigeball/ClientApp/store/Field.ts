@@ -1,34 +1,25 @@
 import { Action, Reducer } from 'redux';
-import { Point } from 'ClientApp/struct/Point';
+import { Point } from '../struct/Point';
+import { KnownAction } from '../actions/FieldActions'
 
 export interface FieldState {
-    gridX: number;
-    gridY: number;
+    width: number;
+    height: number;
     goalWidth: number;
     ballPoint: Point;
     time: number;
 }
 
 const defaultFieldState: FieldState = {
-    gridX: 60,
-    gridY: 35,
+    width: 60,
+    height: 35,
     goalWidth: 3,
     ballPoint: new Point(30, 18),
     time:0,
 }
 
-interface MoveBallAction { type: 'MOVE_BALL', value: Point}
-
-type KnownAction = MoveBallAction; // | etc;
-
-
-export const actionCreators = {
-    moveBall: () => <MoveBallAction>{ type: 'MOVE_BALL' },
-};
-
-
-export const reducer: Reducer<FieldState>= (state:FieldState, incomingAction: KnownAction) => {
-    const action = incomingAction as KnownAction;
+export const reducer: Reducer<FieldState> = (state: FieldState, inAction: Action) => {
+    let action = inAction as KnownAction;
     switch (action.type) {
         case 'MOVE_BALL':
             //return {...state, ballPoint : action.value };
